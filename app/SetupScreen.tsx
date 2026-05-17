@@ -6,7 +6,7 @@ import TopBar from "@/app/components/TopBar";
 export default function SetupScreen() {
     const router = useRouter();
     return (
-        <main className="flex flex-col min-h-screen bg-white">
+        <main className="flex flex-col w-full bg-white">
             <TopBar title="Set-up" showBack={false} showFilter={false}/>
             <div className="flex flex-col items-center flex-grow p-6 pt-16">
                 <div className="mb-12 flex flex-col items-center gap-4">
