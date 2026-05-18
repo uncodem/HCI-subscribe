@@ -6,6 +6,8 @@ import { dummySubs } from "@/app/lib/data";
 
 export default function Calendar() {
     const [currentDate, setCurrentDate] = useState(new Date(2026, 4, 1));
+    
+    const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
     const currentMonth = currentDate.toLocaleString('default', { month: 'long' });
     const cYear = currentDate.getFullYear();
@@ -30,10 +32,18 @@ export default function Calendar() {
         return isDueMonth && isDueDay && isActive;
     };
 
-    const upcomingSubs = dummySubs.filter(sub => isSubDue(sub));
+    const upcomingSubs = dummySubs.filter(sub => 
+        selectedDay ? isSubDue(sub, selectedDay) : isSubDue(sub)
+    );
 
-    const nextMonth = () => setCurrentDate(new Date(cYear, cMonth + 1, 1));
-    const prevMonth = () => setCurrentDate(new Date(cYear, cMonth - 1, 1));
+    const nextMonth = () => {
+        setCurrentDate(new Date(cYear, cMonth + 1, 1));
+        setSelectedDay(null); 
+    };
+    const prevMonth = () => {
+        setCurrentDate(new Date(cYear, cMonth - 1, 1));
+        setSelectedDay(null);
+    };
 
     return (
         <div className="flex flex-col h-full w-full bg-white pb-24">
@@ -55,9 +65,18 @@ export default function Calendar() {
                             
                             {days.map(day => {
                                 const hasSub = dummySubs.some(sub => isSubDue(sub, day));
+                                const isSelected = selectedDay === day;
+
                                 return (
-                                    <div key={`day-${day}`} className="bg-white h-10 flex justify-center items-center shadow-sm">
-                                        <div className={`w-8 h-8 flex items-center justify-center rounded-full ${hasSub ? "border-2 border-red-500 text-red-500 font-bold" : ""}`}>
+                                    <div 
+                                        key={`day-${day}`} 
+                                        onClick={() => hasSub ? setSelectedDay(isSelected ? null : day) : null}
+                                        className={`bg-white h-10 flex justify-center items-center shadow-sm ${hasSub ? "cursor-pointer" : ""}`}
+                                    >
+                                        <div className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors 
+                                            ${hasSub && !isSelected ? "border-2 border-red-500 text-red-500 font-bold" : ""}
+                                            ${isSelected ? "bg-red-500 text-white font-bold" : ""}
+                                        `}>
                                             {day}
                                         </div>
                                     </div>
@@ -76,7 +95,10 @@ export default function Calendar() {
                         <button onClick={nextMonth} className="text-3xl font-bold hover:scale-125 transition-transform cursor-pointer">{">"}</button>
                     </div>
                     
-                    <h4 className="text-white text-center font-bold mb-4">Subscriptions Due</h4>
+                    <h4 className="text-white text-center font-bold mb-4">
+                        {selectedDay ? `Due on ${currentMonth} ${selectedDay}` : "Subscriptions Due"}
+                    </h4>
+                    
                     <div className="flex flex-col w-full gap-1">
                         {upcomingSubs.map(sub => (
                             <SubscriptionChip
@@ -87,6 +109,9 @@ export default function Calendar() {
                                 variant="teal"
                             />
                         ))}
+                        {upcomingSubs.length === 0 && selectedDay && (
+                            <div className="text-center text-white/80 font-semibold mt-4">No payments due today.</div>
+                        )}
                         <div className="h-32 w-full shrink-0"></div>
                     </div>
                 </div>
