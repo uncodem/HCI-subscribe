@@ -14,6 +14,10 @@ export default function Dashboard() {
     const totalPaid = totalDue * 0.4; 
     const remaining = totalDue - totalPaid;
 
+    function formatNum(num: number) {
+        return num.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    }
+
     return (
         <div className="flex flex-col h-full w-full bg-white pb-24">
             <div className="shrink-0">
@@ -27,15 +31,15 @@ export default function Dashboard() {
                     <div className="flex flex-row justify-between w-full gap-2 mb-2">
                         <div className="flex-1 bg-brand-teal text-white rounded-2xl p-3 flex flex-col items-center justify-center shadow-sm">
                             <span className="font-bold text-xs mb-1 text-white/80">Total Due:</span>
-                            <span className="font-bold text-sm">PHP {totalDue.toFixed(0)}</span>
+                            <span className="font-bold text-sm">PHP {formatNum(totalDue)}</span>
                         </div>
                         <div className="flex-1 bg-brand-teal text-white rounded-2xl p-3 flex flex-col items-center justify-center shadow-sm">
                             <span className="font-bold text-xs mb-1 text-white/80">Total Paid:</span>
-                            <span className="font-bold text-sm">PHP {totalPaid.toFixed(0)}</span>
+                            <span className="font-bold text-sm">PHP {formatNum(totalPaid)}</span>
                         </div>
                         <div className="flex-1 bg-brand-teal text-white rounded-2xl p-3 flex flex-col items-center justify-center shadow-sm">
                             <span className="font-bold text-xs mb-1 text-white/80">Balance:</span>
-                            <span className="font-bold text-sm">PHP {remaining.toFixed(0)}</span>
+                            <span className="font-bold text-sm">PHP {formatNum(remaining)}</span>
                         </div>
                     </div>
                 </div>
@@ -48,7 +52,7 @@ export default function Dashboard() {
                     
                     <div className="flex flex-col gap-1 w-full">
                         {upcoming.map(sub => (
-                            <SubscriptionChip key={sub.id} id={sub.id} name={sub.name} price={sub.price} cycle="DUE:" variant="white" />
+                            <SubscriptionChip key={sub.id} id={sub.id} name={sub.name} price={sub.price} dueDate={sub.dueDate} variant="white" />
                         ))}
                     </div>
                 </div>
@@ -58,7 +62,7 @@ export default function Dashboard() {
                     
                     <div className="flex flex-col gap-1 w-full">
                         {active.map(sub => (
-                            <SubscriptionChip key={sub.id} id={sub.id} name={sub.name} price={sub.price} cycle={`/${sub.cycle === "monthly" ? "month" : "yearly"}`} variant="teal" />
+                            <SubscriptionChip key={sub.id} id={sub.id} name={sub.name} price={sub.price} dueDate={sub.dueDate} cycle={`/${sub.cycle === "monthly" ? "month" : "yearly"}`} variant="teal" />
                         ))}
                     </div>
                 </div>

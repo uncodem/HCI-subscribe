@@ -28,6 +28,10 @@ export default function Summary() {
         { height: "h-[90%]", color: "bg-brand-yellow" },
     ];
 
+    function formatNum(num: number) {
+        return num.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    }
+
     return (
         <div className="flex flex-col h-full w-full bg-white pb-24">
             <div className="shrink-0">
@@ -39,11 +43,11 @@ export default function Summary() {
                 <div className="flex flex-row justify-between w-full gap-4 mb-6">
                     <div className="flex-1 bg-brand-yellow text-white rounded-2xl p-4 flex flex-col items-center justify-center shadow-sm">
                         <span className="font-bold text-sm mb-2 text-center text-white/90">Monthly Total:</span>
-                        <span className="font-bold text-xl">PHP {monthlyTotal.toFixed(2)}</span>
+                        <span className="font-bold text-xl">PHP {formatNum(monthlyTotal)}</span>
                     </div>
                     <div className="flex-1 bg-brand-yellow text-white rounded-2xl p-4 flex flex-col items-center justify-center shadow-sm">
                         <span className="font-bold text-sm mb-2 text-center text-white/90">Yearly Estimate:</span>
-                        <span className="font-bold text-xl">PHP {yearlyTotal.toFixed(2)}</span>
+                        <span className="font-bold text-xl">PHP {formatNum(yearlyTotal)}</span>
                     </div>
                 </div>
 
@@ -81,6 +85,7 @@ export default function Summary() {
                                 name={sub.name}
                                 price={sub.price}
                                 cycle={`/${sub.cycle === "monthly" ? "month" : "yearly"}`}
+                                dueDate={sub.dueDate}
                                 variant="yellow" 
                             />
                         ))}
