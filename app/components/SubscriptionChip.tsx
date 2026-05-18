@@ -55,5 +55,5 @@ export default function SubscriptionChip({ id, name, price, cycle, dueDate, vari
         </div>
     );
 
-    return id ? <Link href={`/subscription/${id}`} className="block w-full">{content}</Link> : content;
+    return id ? <Link href={`/dashboard/subscription/${id}`} className="block w-full">{content}</Link> : content;
 }
