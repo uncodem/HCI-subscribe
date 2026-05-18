@@ -45,6 +45,7 @@ export default function AddSubscription() {
     const [remindDays, setRemindDays] = useState("");
     
     const [notes, setNotes] = useState("");
+    const [period, setPeriod] = useState("");
 
     const handleSave = () => {
         if (!name || !price || !dueDate) return; 
@@ -53,7 +54,7 @@ export default function AddSubscription() {
             id: Math.random().toString(36).substring(7),
             name,
             price: parseFloat(price).toFixed(2),
-            cycle: "monthly", 
+            cycle: (period.toLowerCase() as "monthly"|"yearly"), 
             dueDate,
             category,
             paymentMethod,
@@ -78,7 +79,9 @@ export default function AddSubscription() {
                     <FormSelect label="Category" defaultText="Select Category" value={category} onChange={(e: any) => setCategory(e.target.value)} options={["Entertainment", "Utilities", "Software", "Health"]} />
                     
                     <FormInput label="Amount" type="number" placeholder="Enter the price here..." value={price} onChange={(e: any) => setPrice(e.target.value)} />
-                    
+
+                    <FormSelect label="Payment Period" defaultText="Select Payment Period" value={period} onChange={(e: any) => setPeriod(e.target.value)} options={["Monthly", "Yearly"]}/>
+
                     <FormInput label="Renewal Date" type="date" value={dueDate} onChange={(e: any) => setDueDate(e.target.value)} />
 
                     <FormSelect label="Payment Method" defaultText="Select Payment Method" value={paymentMethod} onChange={(e: any) => setPaymentMethod(e.target.value)} options={["Credit Card", "GCash", "PayPal", "Bank Transfer"]} />
@@ -88,13 +91,13 @@ export default function AddSubscription() {
                         <label className="font-bold text-white text-lg">Remind me:</label>
                         <div className="bg-white rounded-2xl px-4 py-3 flex flex-wrap items-center gap-2 text-brand-teal font-bold text-sm shadow-sm">
                             <span>▼</span>
-                            <input type="number" className="w-8 border-b-2 border-brand-teal text-center focus:outline-none" value={remindMonths} onChange={(e) => setRemindMonths(e.target.value)} />
+                            <input type="number" min="0" className="w-8 border-b-2 border-brand-teal text-center focus:outline-none" value={remindMonths} onChange={(e) => setRemindMonths(e.target.value)} />
                             <span>Months ▼</span>
                             
-                            <input type="number" className="w-8 border-b-2 border-brand-teal text-center focus:outline-none" value={remindWeeks} onChange={(e) => setRemindWeeks(e.target.value)} />
+                            <input type="number" min="0" className="w-8 border-b-2 border-brand-teal text-center focus:outline-none" value={remindWeeks} onChange={(e) => setRemindWeeks(e.target.value)} />
                             <span>Weeks ▼</span>
                             
-                            <input type="number" className="w-8 border-b-2 border-brand-teal text-center focus:outline-none" value={remindDays} onChange={(e) => setRemindDays(e.target.value)} />
+                            <input type="number" min="0" className="w-8 border-b-2 border-brand-teal text-center focus:outline-none" value={remindDays} onChange={(e) => setRemindDays(e.target.value)} />
                             <span>Days</span>
                             
                             <span className="w-full text-xs opacity-70 mt-1">before</span>
