@@ -29,7 +29,6 @@ export default function Settings() {
 
                 <div className="flex flex-col w-full">
                     <SettingsRow title="Account" icon={<User className="text-brand-yellow"/>} />
-                    <SettingsRow title="Notifications" icon={<Bell className="text-brand-yellow"/>} />
                     <SettingsRow title="Privacy & Security" icon={<Lock className="text-brand-yellow"/>} />
                     <SettingsRow title="Summary" icon={<BarChart2 className="text-brand-yellow"/>} 
                         onClick={() => router.push('/dashboard/summary')}/>

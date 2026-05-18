@@ -1,4 +1,3 @@
-import Link from "next/link";
 import BottomBar from "@/app/components/BottomBar";
 
 export default function DashboardLayout({
