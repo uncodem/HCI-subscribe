@@ -27,16 +27,14 @@ export default function LoginScreen() {
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-white p-6">
             <div className="mb-12 flex flex-col items-center gap-4">
-                <div className="w-24 h-24 bg-black rounded-full flex items-center justify-center overflow-hidden">
-                    <Image 
-                        src="/vercel.svg" 
-                        alt="Vercel Logo" 
-                        width={16} 
-                        height={16} 
-                        className="w-16 h-16" 
-                        priority 
-                    />
-                </div>
+                <Image 
+                    src="/logo.svg" 
+                    alt="SubScribe Logo" 
+                    width={16} 
+                    height={16} 
+                    className="w-32 h-32" 
+                    priority 
+                />
                 <h1 className="text-4xl font-bold text-brand-yellow">SubScribe</h1>
             </div>
 
